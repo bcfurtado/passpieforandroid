@@ -14,11 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +43,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Should be a fragment now
         Fragment fragment = new AccountsListFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -96,13 +90,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_accounts_list) {
+            Fragment fragment = new AccountsListFragment();
 
-        } else if (id == R.id.nav_slideshow) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        } else if (id == R.id.nav_private_key) {
+            Fragment fragment = new PrivateKeyFragment();
 
-        } else if (id == R.id.nav_manage) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_share) {
 
