@@ -3,6 +3,8 @@ package io.github.bcfurtado.passpieforandroid;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.Arrays;
 
@@ -47,16 +48,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ListAdapter listAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                Arrays.asList(
-                    "facebook.com",
-                    "google.com",
-                    "twitter.com"
-                    )
-                );
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(listAdapter);
+        // Should be a fragment now
+        Fragment fragment = new AccountsListFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
     }
 
     @Override
