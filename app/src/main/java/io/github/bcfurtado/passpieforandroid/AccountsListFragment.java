@@ -18,7 +18,7 @@ public class AccountsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView  = inflater.inflate(R.layout.content_main, container, false);
+        View rootView  = inflater.inflate(R.layout.accounts_list_fragment, container, false);
 
         ListAdapter listAdapter = new ArrayAdapter<String>(rootView.getContext(),
             android.R.layout.simple_list_item_1,
