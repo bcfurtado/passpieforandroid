@@ -86,27 +86,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+
         if (id == R.id.nav_accounts_list) {
-            Fragment fragment = new AccountsListFragment();
+            fragment = new AccountsListFragment();
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
         } else if (id == R.id.nav_private_key) {
-            Fragment fragment = new PrivateKeyFragment();
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
+            fragment = new PrivateKeyFragment();
 
         } else if (id == R.id.nav_repository_configuration) {
-            Fragment fragment = new RepositoryConfigurationFragment();
+            fragment = new RepositoryConfigurationFragment();
 
+        }
+
+        if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
