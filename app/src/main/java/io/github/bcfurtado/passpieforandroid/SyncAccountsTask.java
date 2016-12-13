@@ -2,11 +2,15 @@ package io.github.bcfurtado.passpieforandroid;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.TransportConfigCallback;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jgit.transport.SshTransport;
 import org.eclipse.jgit.transport.Transport;
@@ -24,29 +28,53 @@ public class SyncAccountsTask extends AsyncTask {
     private Context context;
     private PasspieSshSessionFactory passpieSshSessionFactory;
     private String repositoryUrl;
+    private View view;
+    private Exception exception;
 
-    public SyncAccountsTask(Context context, String repositoryUrl) {
+
+    public SyncAccountsTask(Context context, String repositoryUrl, View view) {
         this.context = context;
         this.passpieSshSessionFactory = new PasspieSshSessionFactory(context);
         this.repositoryUrl = repositoryUrl;
+        this.view = view;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
         try {
+            Log.d(SyncAccountsTask.class.getSimpleName(), "Starting clone...");
+
             File gitDir = getRepositoryFolder();
 
-            syncRepository(gitDir);
+            CloneCommand cloneCommand = getSyncRepositoryCommand(gitDir);
+            cloneCommand.call();
 
+        } catch (InvalidRemoteException e) {
+            e.printStackTrace();
+            this.exception = e;
         } catch (GitAPIException e) {
             e.printStackTrace();
+            this.exception = e;
         } catch (IOException e) {
             e.printStackTrace();
+            this.exception = e;
         }
+        Log.d(SyncAccountsTask.class.getSimpleName(), "Clone Finished.");
         return null;
     }
 
-    private void syncRepository(File gitDir) throws GitAPIException, IOException {
+    @Override
+    protected void onPostExecute(Object o) {
+        if (this.exception == null) {
+            Snackbar.make(view, "Sync completed.", Snackbar.LENGTH_LONG).show();
+        } else {
+            String message = String.format("%s: %s", "We got a error!", this.exception.getMessage());
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        }
+
+    }
+
+    private CloneCommand getSyncRepositoryCommand(File gitDir) throws GitAPIException, IOException {
         final SshSessionFactory sshSessionFactory = passpieSshSessionFactory.getSessionFactory();
 
         TransportConfigCallback transportConfigCallback = new TransportConfigCallback() {
@@ -56,18 +84,13 @@ public class SyncAccountsTask extends AsyncTask {
                 sshTransport.setSshSessionFactory(sshSessionFactory);
             }
         };
-        Log.d(SyncAccountsTask.class.getSimpleName(), "Starting clone...");
 
-
-        Git git = Git.cloneRepository()
+        return Git.cloneRepository()
                 .setURI(repositoryUrl)
                 .setDirectory(gitDir)
                 .setCloneAllBranches(false)
                 .setCloneSubmodules(false)
-                .setTransportConfigCallback(transportConfigCallback)
-                .call();
-
-        Log.d(SyncAccountsTask.class.getSimpleName(), "Clone Finished.");
+                .setTransportConfigCallback(transportConfigCallback);
     }
 
     private File getRepositoryFolder() {

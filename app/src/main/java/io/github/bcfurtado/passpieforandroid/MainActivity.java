@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Syncing your account...", Snackbar.LENGTH_LONG).show();
                 String repositoryUrl = "";
-                SyncAccountsTask task = new SyncAccountsTask(getBaseContext(), repositoryUrl);
+                SyncAccountsTask task = new SyncAccountsTask(getBaseContext(), repositoryUrl, view);
                 task.execute();
             }
         });
