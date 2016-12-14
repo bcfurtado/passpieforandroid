@@ -8,10 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import io.github.bcfurtado.passpieforandroid.RepositoryConfigurationFragment;
+import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
 
 public class KeyManager {
 
-    private static final String PRIVATE_KEY_PREF = "PRIVATE_KEY_PREF";
     private Context context;
 
     public KeyManager(Context context) {
@@ -27,15 +27,13 @@ public class KeyManager {
         }
         privateKeyFile.createNewFile();
 
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+
         FileOutputStream outputStream = new FileOutputStream(privateKeyFile);
-        outputStream.write(getPrivateKey().getBytes());
+        outputStream.write(preferenceManager.getPrivateKey().getBytes());
         outputStream.close();
 
         return privateKeyFile;
     }
 
-    private String getPrivateKey() {
-        SharedPreferences preferences = context.getSharedPreferences(RepositoryConfigurationFragment.APPLICATION_PREFERENCES, Context.MODE_PRIVATE);
-        return preferences.getString(PRIVATE_KEY_PREF, "");
-    }
 }

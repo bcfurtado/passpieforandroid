@@ -35,8 +35,7 @@ public class AccountsListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         Snackbar.make(view, "Syncing your account...", Snackbar.LENGTH_LONG).show();
-        String repositoryUrl = "";
-        SyncAccountsTask task = new SyncAccountsTask(getContext(), repositoryUrl, view, baseAdapter);
+        SyncAccountsTask task = new SyncAccountsTask(getContext(), view, baseAdapter);
         task.execute();
 
     }

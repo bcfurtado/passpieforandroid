@@ -19,6 +19,7 @@ import org.eclipse.jgit.transport.Transport;
 import java.io.File;
 import java.io.IOException;
 
+import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
 import io.github.bcfurtado.passpieforandroid.ssh.PasspieSshSessionFactory;
 import io.github.bcfurtado.passpieforandroid.utils.FileUtils;
 
@@ -27,19 +28,19 @@ public class SyncAccountsTask extends AsyncTask {
     private static final String GIT_REPO_FOLDER = "gitrepo";
 
     private Context context;
-    private PasspieSshSessionFactory passpieSshSessionFactory;
-    private String repositoryUrl;
     private View view;
     private BaseAdapter baseAdapter;
     private Exception exception;
+    private PreferenceManager preferenceManager;
+    private PasspieSshSessionFactory passpieSshSessionFactory;
 
 
-    public SyncAccountsTask(Context context, String repositoryUrl, View view, BaseAdapter baseAdapter) {
+    public SyncAccountsTask(Context context, View view, BaseAdapter baseAdapter) {
         this.context = context;
-        this.passpieSshSessionFactory = new PasspieSshSessionFactory(context);
-        this.repositoryUrl = repositoryUrl;
         this.view = view;
         this.baseAdapter = baseAdapter;
+        this.preferenceManager = new PreferenceManager(context);
+        this.passpieSshSessionFactory = new PasspieSshSessionFactory(context);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class SyncAccountsTask extends AsyncTask {
         };
 
         return Git.cloneRepository()
-                .setURI(repositoryUrl)
+                .setURI(preferenceManager.getRepositoryUri())
                 .setDirectory(gitDir)
                 .setCloneAllBranches(false)
                 .setCloneSubmodules(false)
