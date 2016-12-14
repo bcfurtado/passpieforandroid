@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
@@ -29,14 +30,16 @@ public class SyncAccountsTask extends AsyncTask {
     private PasspieSshSessionFactory passpieSshSessionFactory;
     private String repositoryUrl;
     private View view;
+    private BaseAdapter baseAdapter;
     private Exception exception;
 
 
-    public SyncAccountsTask(Context context, String repositoryUrl, View view) {
+    public SyncAccountsTask(Context context, String repositoryUrl, View view, BaseAdapter baseAdapter) {
         this.context = context;
         this.passpieSshSessionFactory = new PasspieSshSessionFactory(context);
         this.repositoryUrl = repositoryUrl;
         this.view = view;
+        this.baseAdapter = baseAdapter;
     }
 
     @Override
@@ -67,6 +70,7 @@ public class SyncAccountsTask extends AsyncTask {
     protected void onPostExecute(Object o) {
         if (this.exception == null) {
             Snackbar.make(view, "Sync completed.", Snackbar.LENGTH_LONG).show();
+            this.baseAdapter.notifyDataSetChanged();
         } else {
             String message = String.format("%s: %s", "We got a error!", this.exception.getMessage());
             Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();

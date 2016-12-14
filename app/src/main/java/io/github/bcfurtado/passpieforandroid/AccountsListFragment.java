@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
 
-public class AccountsListFragment extends Fragment {
+public class AccountsListFragment extends Fragment implements View.OnClickListener {
 
     public BaseAdapter baseAdapter;
 
@@ -21,24 +21,23 @@ public class AccountsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView  = inflater.inflate(R.layout.accounts_list_fragment, container, false);
-
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Syncing your account...", Snackbar.LENGTH_LONG).show();
-                String repositoryUrl = "";
-                SyncAccountsTask task = new SyncAccountsTask(getContext(), repositoryUrl, view);
-                task.execute();
-            }
-        });
-
         baseAdapter = new AccountsAdapter(rootView.getContext());
-
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
         listView.setAdapter(baseAdapter);
 
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+
         return rootView;
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        Snackbar.make(view, "Syncing your account...", Snackbar.LENGTH_LONG).show();
+        String repositoryUrl = "";
+        SyncAccountsTask task = new SyncAccountsTask(getContext(), repositoryUrl, view, baseAdapter);
+        task.execute();
 
     }
 }
