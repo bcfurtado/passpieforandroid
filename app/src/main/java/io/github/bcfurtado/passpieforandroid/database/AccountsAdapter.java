@@ -48,4 +48,10 @@ public class AccountsAdapter extends BaseAdapter {
         }
         return view;
     }
+
+    public void updateData() {
+        this.accounts = passpieDatabase.getAccounts();
+        this.notifyDataSetChanged();
+
+    }
 }

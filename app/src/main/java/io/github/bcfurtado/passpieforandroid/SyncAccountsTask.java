@@ -19,6 +19,7 @@ import org.eclipse.jgit.transport.Transport;
 import java.io.File;
 import java.io.IOException;
 
+import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
 import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
 import io.github.bcfurtado.passpieforandroid.ssh.PasspieSshSessionFactory;
 import io.github.bcfurtado.passpieforandroid.utils.FileUtils;
@@ -29,13 +30,13 @@ public class SyncAccountsTask extends AsyncTask {
 
     private Context context;
     private View view;
-    private BaseAdapter baseAdapter;
+    private AccountsAdapter baseAdapter;
     private Exception exception;
     private PreferenceManager preferenceManager;
     private PasspieSshSessionFactory passpieSshSessionFactory;
 
 
-    public SyncAccountsTask(Context context, View view, BaseAdapter baseAdapter) {
+    public SyncAccountsTask(Context context, View view, AccountsAdapter baseAdapter) {
         this.context = context;
         this.view = view;
         this.baseAdapter = baseAdapter;
@@ -70,8 +71,8 @@ public class SyncAccountsTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         if (this.exception == null) {
+            this.baseAdapter.updateData();
             Snackbar.make(view, "Sync completed.", Snackbar.LENGTH_LONG).show();
-            this.baseAdapter.notifyDataSetChanged();
         } else {
             String message = String.format("%s: %s", "We got a error!", this.exception.getMessage());
             Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
