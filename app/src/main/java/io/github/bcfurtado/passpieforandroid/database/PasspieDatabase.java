@@ -63,14 +63,6 @@ public class PasspieDatabase {
         return account;
     }
 
-    public List<String> getAccountsAsString() {
-        List<String> strings = new ArrayList<>();
-        for (Account account: getAccounts()) {
-            strings.add(account.getFullname());
-        }
-        return strings;
-    }
-
     private String getRepoURI() {
         return context.getFilesDir().getAbsolutePath() + File.separator + GIT_REPO_FOLDER;
     }
