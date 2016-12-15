@@ -1,13 +1,11 @@
 package io.github.bcfurtado.passpieforandroid.ssh;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import io.github.bcfurtado.passpieforandroid.RepositoryConfigurationFragment;
 import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
 
 public class KeyManager {
