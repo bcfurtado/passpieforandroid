@@ -9,13 +9,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import io.github.bcfurtado.passpieforandroid.AccountConfirmationOnClickListener;
+
 public class AccountsAdapter extends BaseAdapter {
 
+    private final Context context;
     private LayoutInflater inflater;
     private PasspieDatabase passpieDatabase;
     private List<Account> accounts;
 
     public AccountsAdapter(Context context) {
+        this.context = context;
         this.passpieDatabase = new PasspieDatabase(context);
         this.accounts = passpieDatabase.getAccounts();
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,19 +43,21 @@ public class AccountsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            Account account = getItem(i);
+            final Account account = getItem(i);
 
             view = this.inflater.inflate(android.R.layout.simple_list_item_1, viewGroup, false);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(account.getFullname());
+            text.setOnClickListener(new AccountConfirmationOnClickListener(account));
         }
         return view;
     }
 
+
     public void updateData() {
         this.accounts = passpieDatabase.getAccounts();
         this.notifyDataSetChanged();
-
     }
+
 }
