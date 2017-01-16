@@ -2,6 +2,8 @@ package io.github.bcfurtado.passpieforandroid;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -50,7 +52,11 @@ public class AccountConfirmationDialog extends DialogFragment {
                 .setPositiveButton("Copy Password", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "Not implemented yet.", Toast.LENGTH_SHORT).show();
+                        String decryptedPassword = getUnencryptedPassword(getActivity(), encryptedPassword, passphraseEditText.getText().toString());
+                        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("your password", decryptedPassword);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(getActivity(), "Password copied to your clipboard.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNeutralButton("Show Password", new DialogInterface.OnClickListener() {
