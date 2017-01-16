@@ -1,6 +1,8 @@
 package io.github.bcfurtado.passpieforandroid.database;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.github.bcfurtado.passpieforandroid.AccountConfirmationOnClickListener;
+import io.github.bcfurtado.passpieforandroid.AccountConfirmationDialog;
+
 
 public class AccountsAdapter extends BaseAdapter {
 
@@ -49,7 +52,13 @@ public class AccountsAdapter extends BaseAdapter {
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(account.getFullname());
-            text.setOnClickListener(new AccountConfirmationOnClickListener(account));
+            text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
+                    AccountConfirmationDialog.newInstance(account.getPassword()).show(fm, "dialog");
+                }
+            });
         }
         return view;
     }
