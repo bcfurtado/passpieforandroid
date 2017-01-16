@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.bouncycastle.openpgp.PGPException;
+
+import java.io.IOException;
+
 import io.github.bcfurtado.passpieforandroid.database.Account;
 import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
 import io.github.bcfurtado.passpieforandroid.utils.DecryptorHelper;
@@ -52,26 +56,35 @@ public class AccountConfirmationDialog extends DialogFragment {
                 .setPositiveButton("Copy Password", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String decryptedPassword = getUnencryptedPassword(getActivity(), encryptedPassword, passphraseEditText.getText().toString());
-                        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("your password", decryptedPassword);
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(getActivity(), "Password copied to your clipboard.", Toast.LENGTH_SHORT).show();
+                        try {
+                            String decryptedPassword  = DecryptorHelper.decryptPassword(getActivity(), encryptedPassword, passphraseEditText.getText().toString());
+
+                            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("your password", decryptedPassword);
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(getActivity(), "Password copied to your clipboard.", Toast.LENGTH_SHORT).show();
+
+                        } catch (IOException | PGPException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "Was not possible decrypt your account.", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 })
                 .setNeutralButton("Show Password", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String decryptedPassword = getUnencryptedPassword(getActivity(), encryptedPassword, passphraseEditText.getText().toString());
-                        Toast.makeText(getActivity(), String.format("Your password is:\r\n%s", decryptedPassword), Toast.LENGTH_LONG).show();
+                        try {
+                            String decryptedPassword = DecryptorHelper.decryptPassword(getActivity(), encryptedPassword, passphraseEditText.getText().toString());
+                            Toast.makeText(getActivity(), String.format("Your password is:\r\n%s", decryptedPassword), Toast.LENGTH_LONG).show();
+                        } catch (IOException | PGPException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "Was not possible decrypt your account.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
         return builder.create();
     }
 
-    private String getUnencryptedPassword(Context context, String encryptedPassword, String passphrase) {
-        Log.d(AccountsAdapter.class.getSimpleName(), String.format("Encrypted Password: %s", encryptedPassword));
-        return DecryptorHelper.decryptPassword(context, encryptedPassword, passphrase);
-    }
 }

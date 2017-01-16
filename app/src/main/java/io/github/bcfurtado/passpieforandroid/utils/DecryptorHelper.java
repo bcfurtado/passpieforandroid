@@ -2,6 +2,7 @@ package io.github.bcfurtado.passpieforandroid.utils;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import org.bouncycastle.openpgp.PGPException;
 import org.c02e.jpgpj.Decryptor;
@@ -13,34 +14,28 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
+
 
 public class DecryptorHelper {
 
     public static final String PRIVATE_KEY_START_SECTION = "-----BEGIN PGP PRIVATE KEY BLOCK-----";
 
-    public static String decryptPassword(Context context, String encryptedPassword, String passphrase) {
+    public static String decryptPassword(Context context, String encryptedPassword, String passphrase) throws IOException, PGPException {
         Decryptor decryptor;
 
-        try {
-            File keyFile = getKeysFile(context);
-            String keysAsString = FileUtils.readFile(keyFile);
-            String privateKeyAsString = getPrivatekey(keysAsString);
+        File keyFile = getKeysFile(context);
+        String keysAsString = FileUtils.readFile(keyFile);
+        String privateKeyAsString = getPrivatekey(keysAsString);
 
-            Key key = new Key(privateKeyAsString, passphrase);
-            decryptor = new Decryptor(key);
-            decryptor.setVerificationRequired(false);
+        Key key = new Key(privateKeyAsString, passphrase);
+        decryptor = new Decryptor(key);
+        decryptor.setVerificationRequired(false);
 
-            InputStream isEncryptedPassword = new ByteArrayInputStream(encryptedPassword.getBytes());
-            ByteArrayOutputStream osDecryptedPassword = new ByteArrayOutputStream();
-            decryptor.decrypt(isEncryptedPassword, osDecryptedPassword);
-            return new String(osDecryptedPassword.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ":(";
-        } catch (PGPException e) {
-            e.printStackTrace();
-            return ":( :(";
-        }
+        InputStream isEncryptedPassword = new ByteArrayInputStream(encryptedPassword.getBytes());
+        ByteArrayOutputStream osDecryptedPassword = new ByteArrayOutputStream();
+        decryptor.decrypt(isEncryptedPassword, osDecryptedPassword);
+        return new String(osDecryptedPassword.toByteArray());
 
     }
 
