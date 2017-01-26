@@ -1,5 +1,6 @@
 package io.github.bcfurtado.passpieforandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import io.github.bcfurtado.passpieforandroid.intro.LoginActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,6 +90,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_repository_configuration) {
             fragment = new RepositoryConfigurationFragment();
 
+        } else if (id == R.id.nav_setup) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         if (fragment != null) {
