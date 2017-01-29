@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private AutoCompleteTextView autoCompleteTextView;
     private EditText passwordEditText;
     private Button signInButton;
+    private Button signInWithoutAccount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.login_input);
         passwordEditText = (EditText) findViewById(R.id.password_input);
         signInButton = (Button) findViewById(R.id.sign_in_button);
+        signInWithoutAccount = (Button) findViewById(R.id.sign_in_without_account);
 
         signInButton.setOnClickListener(this);
+        signInWithoutAccount.setOnClickListener(new NotImplementedClickListener(this));
     }
 
     @Override
