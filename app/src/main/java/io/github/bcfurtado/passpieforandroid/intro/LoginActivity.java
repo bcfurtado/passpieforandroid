@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent it = new Intent(this, ChooseRepository.class);
             startActivity(it);
         } else {
-            Toast.makeText(this, "Inval }id login or password.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Invalid login or password.", Toast.LENGTH_LONG).show();
         }
     }
 
