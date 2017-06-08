@@ -36,6 +36,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
     compile 'org.apache.commons:commons-lang3:3.4'
 
+    compile 'org.kohsuke:github-api:1.85'
+
     compile 'org.c02e.jpgpj:jpgpj:0.1'
 
     testCompile 'junit:junit:4.12'
