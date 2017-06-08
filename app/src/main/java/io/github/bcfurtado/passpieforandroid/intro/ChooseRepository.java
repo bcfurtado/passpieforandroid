@@ -1,18 +1,22 @@
 package io.github.bcfurtado.passpieforandroid.intro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.Arrays;
 
+import io.github.bcfurtado.passpieforandroid.MainActivity;
 import io.github.bcfurtado.passpieforandroid.R;
 
-public class ChooseRepository extends AppCompatActivity {
+public class ChooseRepository extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +40,12 @@ public class ChooseRepository extends AppCompatActivity {
         );
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(listAdapter);
+        listView.setOnItemClickListener(this);
+    }
 
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent it = new Intent(this, MainActivity.class);
+        startActivity(it);
     }
 }

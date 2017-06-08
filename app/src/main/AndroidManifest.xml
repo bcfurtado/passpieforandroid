@@ -25,6 +25,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".intro.GenerateKeyActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".intro.ChooseRepository"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

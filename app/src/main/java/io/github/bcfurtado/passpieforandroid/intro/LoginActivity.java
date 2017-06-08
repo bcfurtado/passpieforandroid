@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = passwordEditText.getText().toString();
 
         if (isValidLogin(login) && isValidPassword(password)) {
-            Intent it = new Intent(this, ChooseRepository.class);
+            Intent it = new Intent(this, GenerateKeyActivity.class);
             startActivity(it);
         } else {
             Toast.makeText(this, "Invalid login or password.", Toast.LENGTH_LONG).show();
