@@ -8,19 +8,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import io.github.bcfurtado.passpieforandroid.MainActivity;
 import io.github.bcfurtado.passpieforandroid.R;
 
 public class GenerateKeyActivity extends AppCompatActivity {
 
-    private Button generateSshKeysButton;
-    private Button chooseRepository;
-    private Button createRepository;
+    public Button generateSshKeysButton;
+    public Button chooseRepository;
+    public Button createRepository;
+    private String loginGitHub;
+    private String passwordGitHub;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_key_activity);
+
+        Intent intent = getIntent();
+
+        loginGitHub = intent.getStringExtra(LoginActivity.LOGIN_KEY);
+        passwordGitHub = intent.getStringExtra(LoginActivity.PASSWORD_KEY);
 
         generateSshKeysButton = (Button) findViewById(R.id.generate_ssh_keys_for_github);
         chooseRepository = (Button) findViewById(R.id.choose_repository);
@@ -33,10 +39,9 @@ public class GenerateKeyActivity extends AppCompatActivity {
         generateSshKeysButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateSshKeysButton.setEnabled(false);
-                chooseRepository.setEnabled(true);
-                createRepository.setEnabled(true);
-                Toast.makeText(GenerateKeyActivity.this, "Keys generated and saved.", Toast.LENGTH_SHORT).show();
+
+                AddGithubSshKeyTask task = new AddGithubSshKeyTask(loginGitHub, passwordGitHub, GenerateKeyActivity.this);
+                task.execute();
             }
         });
 
@@ -56,4 +61,5 @@ public class GenerateKeyActivity extends AppCompatActivity {
         });
 
     }
+
 }

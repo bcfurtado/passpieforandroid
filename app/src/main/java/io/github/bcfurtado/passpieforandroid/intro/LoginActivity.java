@@ -22,6 +22,8 @@ import io.github.bcfurtado.passpieforandroid.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String LOGIN_KEY = "login_key";
+    public static final String PASSWORD_KEY = "password_key";
     private AutoCompleteTextView autoCompleteTextView;
     private EditText passwordEditText;
     private Button signInButton;
@@ -61,8 +63,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         va.execute();
     }
 
-    public void goToGenerateKeyActivity() {
+    public void goToGenerateKeyActivity(String login, String password) {
         Intent it = new Intent(this, GenerateKeyActivity.class);
+        it.putExtra(LoginActivity.LOGIN_KEY, login);
+        it.putExtra(LoginActivity.PASSWORD_KEY, password);
         startActivity(it);
     }
 
@@ -96,7 +100,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GitHub github = GitHub.connectUsingPassword(login, password);
                 isCredentialValid = github.isCredentialValid();
                 Log.d(ValidateCredentials.class.getSimpleName(), "Log in: isCredentialValid: " + isCredentialValid);
-
             } catch (IOException e) {
                 e.printStackTrace();
                 this.exception = e;
@@ -109,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(Object object) {
             if (this.exception == null && isCredentialValid) {
                 Toast.makeText(context, "Valid credentials.", Toast.LENGTH_SHORT).show();
-                goToGenerateKeyActivity();
+                goToGenerateKeyActivity(login, password);
             } else {
                 Toast.makeText(context, "Invalid credentials.", Toast.LENGTH_SHORT).show();
             }
