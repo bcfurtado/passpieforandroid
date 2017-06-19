@@ -48,7 +48,7 @@ public class GenerateKeyActivity extends AppCompatActivity {
         chooseRepository.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(GenerateKeyActivity.this, ChooseRepository.class);
+                Intent it = new Intent(GenerateKeyActivity.this, ChooseRepositoryActivity.class);
                 startActivity(it);
             }
         });

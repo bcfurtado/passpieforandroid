@@ -16,7 +16,7 @@ import java.util.Arrays;
 import io.github.bcfurtado.passpieforandroid.MainActivity;
 import io.github.bcfurtado.passpieforandroid.R;
 
-public class ChooseRepository extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ChooseRepositoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
