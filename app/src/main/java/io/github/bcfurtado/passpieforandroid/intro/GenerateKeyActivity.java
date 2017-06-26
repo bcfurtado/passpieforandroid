@@ -49,6 +49,8 @@ public class GenerateKeyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(GenerateKeyActivity.this, ChooseRepositoryActivity.class);
+                it.putExtra(ChooseRepositoryActivity.LOGIN_KEY, loginGitHub);
+                it.putExtra(ChooseRepositoryActivity.PASSWORD_KEY, passwordGitHub);
                 startActivity(it);
             }
         });
