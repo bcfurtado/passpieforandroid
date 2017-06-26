@@ -14,7 +14,6 @@ import org.eclipse.jgit.util.FS;
 import java.io.File;
 import java.io.IOException;
 
-import io.github.bcfurtado.passpieforandroid.SyncAccountsTask;
 
 public class PasspieSshSessionFactory {
 
