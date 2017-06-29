@@ -15,6 +15,8 @@ import android.view.MenuItem;
 
 import io.github.bcfurtado.passpieforandroid.intro.LoginActivity;
 
+import static io.github.bcfurtado.passpieforandroid.AccountsListFragment.UPDATE_ACCOUNTS;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +36,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new AccountsListFragment();
+        boolean updateAccounts = getIntent().getBooleanExtra(UPDATE_ACCOUNTS, false);
+
+        Fragment fragment = AccountsListFragment.newInstance(updateAccounts);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_accounts_list) {
-            fragment = new AccountsListFragment();
+            fragment = AccountsListFragment.newInstance(false);
 
         } else if (id == R.id.nav_private_key) {
             fragment = new PrivateKeyFragment();

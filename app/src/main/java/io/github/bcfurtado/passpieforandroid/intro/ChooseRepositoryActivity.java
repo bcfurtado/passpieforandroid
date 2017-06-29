@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import io.github.bcfurtado.passpieforandroid.AccountsListFragment;
 import io.github.bcfurtado.passpieforandroid.MainActivity;
 import io.github.bcfurtado.passpieforandroid.R;
 import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
@@ -50,6 +51,7 @@ public class ChooseRepositoryActivity extends AppCompatActivity implements Adapt
         preferenceManager.setRepositoryUri(repositoryURI);
 
         Intent it = new Intent(this, MainActivity.class);
+        it.putExtra(AccountsListFragment.UPDATE_ACCOUNTS, true);
         startActivity(it);
     }
 

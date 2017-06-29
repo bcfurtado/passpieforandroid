@@ -14,7 +14,22 @@ import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
 
 public class AccountsListFragment extends Fragment implements View.OnClickListener {
 
+    public static final String UPDATE_ACCOUNTS = "update_accounts";
+
     public AccountsAdapter accountsAdapter;
+
+    public AccountsListFragment() {
+    }
+
+    public static AccountsListFragment newInstance(boolean updateAccounts) {
+        AccountsListFragment fragment = new AccountsListFragment();
+
+        Bundle arguments = new Bundle();
+        arguments.putBoolean(UPDATE_ACCOUNTS, updateAccounts);
+
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -24,9 +39,13 @@ public class AccountsListFragment extends Fragment implements View.OnClickListen
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
         listView.setAdapter(accountsAdapter);
 
-
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+        boolean updateAccountsOnCreate = getArguments().getBoolean(UPDATE_ACCOUNTS, false);
+        if (updateAccountsOnCreate) {
+            updateAccounts(rootView);
+        }
 
         return rootView;
 
@@ -34,9 +53,12 @@ public class AccountsListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+        updateAccounts(view);
+    }
+
+    public void updateAccounts(View view) {
         Snackbar.make(view, "Syncing your account...", Snackbar.LENGTH_LONG).show();
         SyncAccountsTask task = new SyncAccountsTask(getContext(), view, accountsAdapter);
         task.execute();
-
     }
 }
