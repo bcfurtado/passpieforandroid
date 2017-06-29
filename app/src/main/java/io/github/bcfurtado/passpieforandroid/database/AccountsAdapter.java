@@ -65,7 +65,7 @@ public class AccountsAdapter extends BaseAdapter {
 
 
     public void updateData() {
-        this.accounts = passpieDatabase.getAccounts();
+        this.accounts = passpieDatabase.getAccountsSortedByName();
         this.notifyDataSetChanged();
     }
 
