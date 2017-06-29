@@ -51,6 +51,8 @@ public class ChooseRepositoryActivity extends AppCompatActivity implements Adapt
         preferenceManager.setRepositoryUri(repositoryURI);
 
         Intent it = new Intent(this, MainActivity.class);
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         it.putExtra(AccountsListFragment.UPDATE_ACCOUNTS, true);
         startActivity(it);
     }
