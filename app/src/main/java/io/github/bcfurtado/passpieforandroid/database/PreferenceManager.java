@@ -26,6 +26,12 @@ public class PreferenceManager {
         editor.putString(REPOSITORY_URI_PREF, repositoryUri);
         editor.commit();
     }
+
+    public boolean isRepositorySetup() {
+        return getRepositoryUri() !=  "";
+    }
+
+
     public String getPrivateKey() {
         SharedPreferences preferences = context.getSharedPreferences(APPLICATION_PREFERENCES, Context.MODE_PRIVATE);
         return preferences.getString(PRIVATE_KEY_PREF, "");
@@ -36,5 +42,9 @@ public class PreferenceManager {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(PRIVATE_KEY_PREF, privateKey);
         editor.commit();
+    }
+
+    public boolean isPrivateKeySetup() {
+        return getPrivateKey() != "";
     }
 }

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.github.bcfurtado.passpieforandroid.database.PreferenceManager;
 import io.github.bcfurtado.passpieforandroid.intro.LoginActivity;
 
 import static io.github.bcfurtado.passpieforandroid.AccountsListFragment.UPDATE_ACCOUNTS;
@@ -23,6 +24,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!isTheAppSetup()) {
+            Intent it = new Intent(this, LoginActivity.class);
+            startActivity(it);
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -109,5 +116,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public boolean isTheAppSetup() {
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        boolean isPrivateKeySetup = preferenceManager.isPrivateKeySetup();
+        boolean isRepositorySetup = preferenceManager.isRepositorySetup();
+
+        return isPrivateKeySetup && isRepositorySetup;
     }
 }
