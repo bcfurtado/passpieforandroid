@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Security"
+        android:key="pref_key_security">
+
+        <Preference
+            android:title="My private ssh key"
+            android:summary="See the private key used by Passpie"
+            />
+
+        <Preference
+            android:title="My repository url"
+            android:summary="See the address where you passwords are being stored"
+            />
+
+    </PreferenceCategory>
+</PreferenceScreen>
