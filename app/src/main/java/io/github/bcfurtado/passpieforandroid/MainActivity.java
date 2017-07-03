@@ -97,10 +97,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_accounts_list) {
             fragment = AccountsListFragment.newInstance(false);
-
-        } else if (id == R.id.nav_setup) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
         }
 
         if (fragment != null) {
