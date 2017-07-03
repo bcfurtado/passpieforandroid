@@ -16,10 +16,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_setup"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Try Setup App | FUE" />
         </menu>
     </item>
 
