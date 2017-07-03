@@ -8,16 +8,6 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Accounts" />
 
-        <item
-            android:id="@+id/nav_repository_configuration"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Repository Configuration" />
-
-        <item
-            android:id="@+id/nav_private_key"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Private Key" />
-
     </group>
 
     <item android:title="Communicate">

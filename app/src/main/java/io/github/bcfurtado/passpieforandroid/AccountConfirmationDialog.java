@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +18,6 @@ import org.bouncycastle.openpgp.PGPException;
 
 import java.io.IOException;
 
-import io.github.bcfurtado.passpieforandroid.database.Account;
-import io.github.bcfurtado.passpieforandroid.database.AccountsAdapter;
 import io.github.bcfurtado.passpieforandroid.utils.DecryptorHelper;
 
 public class AccountConfirmationDialog extends DialogFragment {
