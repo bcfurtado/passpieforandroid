@@ -7,7 +7,6 @@
         <io.github.bcfurtado.passpieforandroid.preference.PrivateKeyPreference
             android:title="My private ssh key"
             android:summary="See the private key used by Passpie"
-            android:key="REPOSITORY_URI"
             />
 
         <io.github.bcfurtado.passpieforandroid.preference.RepositoryUriPreference
