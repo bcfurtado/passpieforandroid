@@ -37,6 +37,7 @@ public class AccountsListFragment extends Fragment implements View.OnClickListen
         View rootView  = inflater.inflate(R.layout.accounts_list_fragment, container, false);
         accountsAdapter = new AccountsAdapter(rootView.getContext());
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
+        listView.setFastScrollEnabled(true);
         listView.setAdapter(accountsAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);

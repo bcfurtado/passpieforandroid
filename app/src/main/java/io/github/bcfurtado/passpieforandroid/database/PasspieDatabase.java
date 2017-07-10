@@ -55,7 +55,6 @@ public class PasspieDatabase {
             Account account = getAccount(file);
             account.setFullname(folder.getName());
             accounts.add(account);
-            Log.d(PasspieDatabase.class.getSimpleName(), String.format("Account Fullname: %s", account.getFullname()));
         }
         return accounts;
     }
