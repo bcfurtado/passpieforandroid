@@ -44,22 +44,28 @@ public class AccountsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            final Account account = getItem(i);
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
+        View view;
+        AccountHolder holder;
+        final Account account = getItem(position);
 
+        if (convertView == null) {
             view = this.inflater.inflate(android.R.layout.simple_list_item_1, viewGroup, false);
-
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(account.getFullname());
-            text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
-                    AccountConfirmationDialog.newInstance(account.getPassword()).show(fm, "dialog");
-                }
-            });
+            holder = new AccountHolder(view);
+            view.setTag(holder);
+        } else {
+            view = convertView;
+            holder = (AccountHolder) view.getTag();
         }
+        holder.name.setText(account.getFullname());
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
+                AccountConfirmationDialog.newInstance(account.getPassword()).show(fm, "dialog");
+            }
+        });
+
         return view;
     }
 
@@ -67,6 +73,16 @@ public class AccountsAdapter extends BaseAdapter {
     public void updateData() {
         this.accounts = passpieDatabase.getAccountsSortedByName();
         this.notifyDataSetChanged();
+    }
+
+    public class AccountHolder {
+
+        final TextView name;
+
+        public AccountHolder(View view) {
+            this.name = (TextView) view.findViewById(android.R.id.text1);
+        }
+
     }
 
 }
